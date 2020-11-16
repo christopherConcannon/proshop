@@ -1,6 +1,14 @@
-const express = require('express')
-const products = require('./data/products')
-const dotenv = require('dotenv')
+// const express = require('express')
+// const dotenv = require('dotenv')
+// const products = require('./data/products')
+
+// https://nodejs.org/api/esm.html
+// to use ES modules in Node (v14.6+), add to package.json...also note when using import syntax in Node, you must add the file type extension
+// "type": "module",
+
+import express from 'express'
+import dotenv from 'dotenv'
+import products from './data/products.js'
 
 dotenv.config()
 const app = express()
