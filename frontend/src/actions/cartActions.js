@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { CART_ADD_ITEM } from '../constants/cartConstants'
+import { CART_ADD_ITEM, CART_REMOVE_ITEM } from '../constants/cartConstants'
 
 export const addToCart = (id, qty) => async (dispatch, getState) => {
   const { data } = await axios.get(`/api/products/${id}`)
@@ -18,5 +18,14 @@ export const addToCart = (id, qty) => async (dispatch, getState) => {
 
   // eachtime we add the new item to cart, we want to add the updated entire cart to localStorage
   // https://redux.js.org/api/store/#getstate
+  localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems))
+}
+
+export const removeFromCart = (id) => (dispatch, getState) => {
+  dispatch({
+    type: CART_REMOVE_ITEM,
+    payload: id
+  })
+
   localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems))
 }
