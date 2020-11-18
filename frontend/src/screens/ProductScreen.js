@@ -9,7 +9,7 @@ import Loader from '../components/Loader'
 
 // https://reactrouter.com/core/api/match -- React Router has match object with params prop (also see useParams()).  also has a history prop that allows you to push https://reactrouter.com/core/api/history
 const ProductScreen = ({ history, match }) => {
-	const [ qty, setQty ] = useState(0)
+	const [ qty, setQty ] = useState(1)
 
 	const dispatch = useDispatch()
 
