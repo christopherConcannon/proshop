@@ -5,8 +5,9 @@ export const cartReducer = (state = { cartItems: [] }, action) => {
     case CART_ADD_ITEM:
       const item = action.payload
       // check if new item is already in cart
+      // The find() method returns the value of the first element in the provided array that satisfies the provided testing function.
       const existItem = state.cartItems.find(x => x.product === item.product)
-      // if so
+      // if it's there
       if (existItem) {
         return {
           ...state,

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { listProductDetails, listProducts } from '../actions/productActions'
+import { listProductDetails } from '../actions/productActions'
 import { Row, Col, Image, ListGroup, Card, Button, Form } from 'react-bootstrap'
 import Rating from '../components/Rating'
 import Message from '../components/Message'
@@ -54,7 +54,7 @@ const ProductScreen = ({ history, match }) => {
 							<ListGroup.Item>Price: ${product.price}</ListGroup.Item>
 							<ListGroup.Item>Description: {product.description}</ListGroup.Item>
 						</ListGroup>
-					</Col>
+					</Col>   
 					<Col md={3}>
 						<Card>
 							<ListGroup variant='flush'>
@@ -74,7 +74,7 @@ const ProductScreen = ({ history, match }) => {
 								</ListGroup.Item>
 
 								{product.countInStock > 0 && (
-									<ListGroup.Item>
+								 	<ListGroup.Item>
 										<Row>
 											<Col>Qty</Col>
 											<Col>
