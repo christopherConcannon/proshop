@@ -1,4 +1,5 @@
 import asyncHandler from 'express-async-handler'
+import generateToken from '../utils/generateToken.js'
 import User from '../models/userModel.js'
 
 // @desc    Auth user & get token
@@ -16,7 +17,8 @@ const authUser = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
-      token: null
+      // call function to create and sign token, passing the user's id which will be embedded in the token and we can access when we decode
+      token: generateToken(user._id)
     })
   } else {
     // 404 - Unauthorized
