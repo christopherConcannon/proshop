@@ -28,12 +28,7 @@ const userSchema = mongoose.Schema(
 	}
 )
 
-// create a method we can access with an instantiated User (this) to match plaintext password from login form to hashed pw in db 
-userSchema.methods.matchPassword = async function(enteredPassword) {
-  return await bcrypt.compare(enteredPassword, this.password)
-}
-
-// middleware to hash password when user signs up/registers
+// middleware that hooks into save (create) method      to hash password when user signs up/registers
 userSchema.pre('save', async function(next) {
   // only run hash middleware if there is a modified (or newly created) password so if user updates name or email, it doesn't generate new pw hash which would make their old pw not work
   if (!this.isModified('password')) {
@@ -46,6 +41,11 @@ userSchema.pre('save', async function(next) {
   // update password of User instance to be a hashed version of that password
   this.password = await bcrypt.hash(this.password, salt)
 })
+
+// create a method we can access with an instantiated User (this) to match plaintext password from login form to hashed pw in db 
+userSchema.methods.matchPassword = async function(enteredPassword) {
+  return await bcrypt.compare(enteredPassword, this.password)
+}
 
 const User = mongoose.model('User', userSchema)
 
