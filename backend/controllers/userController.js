@@ -88,7 +88,8 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 
 	if (user) {
 		user.name = req.body.name || user.name
-		user.email = req.body.email || user.email
+    user.email = req.body.email || user.email
+    // only want to hash password if it has been updated (isModified)
 		if (req.body.password) {
 			user.password = req.body.password
 		}
