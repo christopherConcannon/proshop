@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
-import { Form, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
+import { Form, Button } from 'react-bootstrap'
 import { saveShippingAddress } from '../actions/cartActions'
 import FormContainer from '../components/FormContainer'
+import CheckoutSteps from '../components/CheckoutSteps'
 
 const ShippingScreen = ({ history }) => {
   const cart = useSelector(state => state.cart)
@@ -24,6 +25,8 @@ const ShippingScreen = ({ history }) => {
 
   return (
     <FormContainer>
+      {/* in CheckoutSteps we are just checking for the existence of these props to conditionally display content so there is no value assigned */}
+      <CheckoutSteps step1 step2 />
       <h1>Shipping</h1>
       <Form onSubmit={submitHandler}>
       <Form.Group controlId='address'>
