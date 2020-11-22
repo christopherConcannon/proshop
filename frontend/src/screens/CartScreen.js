@@ -33,6 +33,7 @@ const CartScreen = ({ match, location, history }) => {
   }
   
   const checkoutHandler = () => {
+    // NOTE...go back to lecture to see how this redirect is working once user logs in 
     // redirect to login unless there is a query string of redirect set to shipping.  if not logged in, go to log in, if they are logged in, go to shipping
     history.push('/login?redirect=shipping')
 

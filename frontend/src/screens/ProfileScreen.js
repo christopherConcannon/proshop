@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Form, Button, Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { getUserDetails, updateUserProfile } from '../actions/userActions'
+import { USER_UPDATE_PROFILE_RESET } from '../constants/userConstants'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 
@@ -23,7 +24,7 @@ const ProfileScreen = ({ history }) => {
 	const userDetails = useSelector((state) => state.userDetails)
 	const { user, loading, error } = userDetails
 
-  const userUpdateProfile = useSelector((state) => state.userUpdateProfile)
+	const userUpdateProfile = useSelector((state) => state.userUpdateProfile)
 	const { success } = userUpdateProfile
 
 	useEffect(
@@ -32,21 +33,22 @@ const ProfileScreen = ({ history }) => {
 			if (!userInfo) {
 				history.push('/login')
 			} else {
-        // when component component is loaded there is nothing in the user state, so we need to dispatch action to get user details to populate form
-				if (!user.name) {
-          dispatch(getUserDetails('profile'))
-          // once user details are in global state, use them to set form field values
+				// when component component is loaded there is nothing in the user state, so we need to dispatch action to get user details to populate form
+				if (!user.name || !user.name || success) {
+					dispatch({ type: USER_UPDATE_PROFILE_RESET })
+					dispatch(getUserDetails('profile'))
+					// once user details are in global state, use them to set form field values
 				} else {
 					setName(user.name)
 					setEmail(user.email)
-        }
-        // // QUESTION...why not just use the userInfo from userLogin to populate the form?  this works
+				}
+				// // QUESTION...why not just use the userInfo from userLogin to populate the form?  this works
 				// setName(userInfo.name)
-        // setEmail(userInfo.email)
-        // POSSIBLE ANSWER...because later when we update it that's the value we will want to use, and possibly the userLogin.userInfo will not update until the next time the user logs in 
+				// setEmail(userInfo.email)
+				// POSSIBLE ANSWER...because later when we update it that's the value we will want to use, and possibly the userLogin.userInfo will not update until the next time the user logs in
 			}
 		},
-		[ dispatch, history, userInfo, user ]
+		[ dispatch, history, userInfo, user, success ]
 	)
 
 	const submitHandler = (e) => {
@@ -54,8 +56,8 @@ const ProfileScreen = ({ history }) => {
 		if (password !== confirmPassword) {
 			setMessage('Passwords do not match')
 		} else {
-      // dispatch update profile
-      dispatch(updateUserProfile({ id: user._id, name, email, password}))
+			// dispatch update profile (don't think we need id here since mongoose is searching by id from token (req.user._id))...works without
+			dispatch(updateUserProfile({ id: user._id, name, email, password}))
 		}
 	}
 

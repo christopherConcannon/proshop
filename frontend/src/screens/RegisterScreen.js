@@ -22,6 +22,7 @@ const RegisterScreen = ({ location, history }) => {
 
 	const redirect = location.search ? location.search.split('=')[1] : '/'
 
+  // when userInfo has been added to global state (which depends on it having been added to db) redirect to previous page or HomeScreen
 	useEffect(
 		() => {
 			if (userInfo) {

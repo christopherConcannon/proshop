@@ -27,6 +27,7 @@ export const register = (name, email, password) => async (dispatch) => {
 			}
 		}
 
+    // add user to db
 		const { data } = await axios.post('/api/users', { name, email, password }, config)
 
 		dispatch({
@@ -106,6 +107,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
 			}
 		}
 
+    // /api/users/profile
 		const { data } = await axios.get(`/api/users/${id}`, config)
 
 		dispatch({
@@ -144,7 +146,15 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
 		dispatch({
 			type    : USER_UPDATE_PROFILE_SUCCESS,
 			payload : data
-		})
+    })
+
+		dispatch({
+			type    : USER_LOGIN_SUCCESS,
+			payload : data
+    })
+
+    localStorage.setItem('userInfo', JSON.stringify(data))
+    
 	} catch (error) {
 		dispatch({
 			type    : USER_UPDATE_PROFILE_FAIL,
