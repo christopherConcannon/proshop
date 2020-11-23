@@ -11,24 +11,26 @@ const PlaceOrderScreen = ({ history }) => {
 
 	const cart = useSelector((state) => state.cart)
 
+  // refactor to external helper function
 	const addDecimals = (num) => {
 		return (Math.round(num * 100) / 100).toFixed(2)
 	}
 
-	// Calculate Prices
+  // Calculate Prices -- refactor to external helper function
+  // QUESTION -- why add these to cart object, why not just consts?
 	cart.itemsPrice = addDecimals(
 		cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
 	)
 	// flat $10 for orders over $100...customize how you like
 	cart.shippingPrice = addDecimals(cart.itemsPrice > 100 ? 10 : 0)
 	cart.taxPrice = addDecimals(Number((0.15 * cart.itemsPrice).toFixed(2)))
-	cart.totalPrice = addDecimals(
-		(Number(cart.itemsPrice) +
-			Number(cart.shippingPrice) +
-			Number(cart.taxPrice)).toFixed(2)
-	)
+	// cart.totalPrice = addDecimals(
+	// 	(Number(cart.itemsPrice) +
+	// 		Number(cart.shippingPrice) +
+	// 		Number(cart.taxPrice)).toFixed(2)
+	// )
 	// if the above gets wonky, here is a simplified version...
-	// cart.totalPrice = (Number(cart.itemsPrice) + Number(cart.shippingPrice) + Number(cart.taxPrice)).toFixed(2)
+	cart.totalPrice = (Number(cart.itemsPrice) + Number(cart.shippingPrice) + Number(cart.taxPrice)).toFixed(2)
 
 	const orderCreate = useSelector((state) => state.orderCreate)
 	const { order, success, error } = orderCreate
@@ -93,6 +95,7 @@ const PlaceOrderScreen = ({ history }) => {
 													<Link to={`/product/${item.product}`}>{item.name}</Link>
 												</Col>
 												<Col md={4}>
+													{/* {item.qty} x ${item.price} = ${(item.qty * item.price).toFixed(2)} */}
 													{item.qty} x ${item.price} = ${item.qty * item.price}
 												</Col>
 											</Row>

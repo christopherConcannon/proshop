@@ -41,6 +41,7 @@ export const register = (name, email, password) => async (dispatch) => {
 			payload : data
 		})
 
+    
 		localStorage.setItem('userInfo', JSON.stringify(data))
 	} catch (error) {
 		dispatch({
@@ -107,7 +108,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
 			}
 		}
 
-    // /api/users/profile
+    // /api/users/profile -- why passing in id here?  perhaps future endpoints will need it
 		const { data } = await axios.get(`/api/users/${id}`, config)
 
 		dispatch({
