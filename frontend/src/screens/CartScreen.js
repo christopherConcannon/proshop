@@ -16,7 +16,6 @@ const CartScreen = ({ match, location, history }) => {
 
 	const cart = useSelector((state) => state.cart)
 	const { cartItems } = cart
-	console.log(cartItems)
 
 	// we can visit the cart just through the link in which case there will be no product id or query string.  if we are coming after a click on Add to Cart in the ProductScreen there will be product id and qty which we will use to update state
 	useEffect(
