@@ -14,9 +14,14 @@ const OrderScreen = ({ match }) => {
 	const orderDetails = useSelector((state) => state.orderDetails)
 	const { order, loading, error } = orderDetails
 
-	useEffect(() => {
-		dispatch(getOrderDetails(orderId))
-	}, [])
+	useEffect(
+		() => {
+			if (!order || order._id !== orderId) {
+				dispatch(getOrderDetails(orderId))
+			}
+		},
+		[ order, orderId ]
+	)
 
 	const addDecimals = (num) => {
 		return (Math.round(num * 100) / 100).toFixed(2)
@@ -52,7 +57,11 @@ const OrderScreen = ({ match }) => {
 								{order.shippingAddress.address}, {order.shippingAddress.city}{' '}
 								{order.shippingAddress.postalCode}, {order.shippingAddress.country}
 							</p>
-              {order.isDelivered ? <Message variant='success'>Delivered on {order.deliveredAt}</Message> : <Message variant='danger'>Not Delivered</Message>}
+							{order.isDelivered ? (
+								<Message variant='success'>Delivered on {order.deliveredAt}</Message>
+							) : (
+								<Message variant='danger'>Not Delivered</Message>
+							)}
 						</ListGroup.Item>
 						<ListGroup.Item>
 							<h2>Payment Method</h2>
@@ -60,7 +69,11 @@ const OrderScreen = ({ match }) => {
 								<strong>Method: </strong>
 								{order.paymentMethod}
 							</p>
-              {order.isPaid ? <Message variant='success'>Paid on {order.paidAt}</Message> : <Message variant='danger'>Not Paid</Message>}
+							{order.isPaid ? (
+								<Message variant='success'>Paid on {order.paidAt}</Message>
+							) : (
+								<Message variant='danger'>Not Paid</Message>
+							)}
 						</ListGroup.Item>
 						<ListGroup.Item>
 							<h2>Order Items</h2>
