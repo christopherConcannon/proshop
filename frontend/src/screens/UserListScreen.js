@@ -6,22 +6,29 @@ import { listUsers } from '../actions/userActions'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 
-const UserListScreen = () => {
+const UserListScreen = ({ history }) => {
 	const dispatch = useDispatch()
 
 	const userList = useSelector((state) => state.userList)
 	const { users, loading, error } = userList
 
+	const userLogin = useSelector((state) => state.userLogin)
+	const { userInfo } = userLogin
+
 	useEffect(
 		() => {
-			dispatch(listUsers())
+			if (userInfo && userInfo.isAdmin) {
+				dispatch(listUsers())
+			} else {
+				history.push('/login')
+			}
 		},
-		[ dispatch ]
-  )
-  
-  const deleteHandler = (id) => {
-    console.log('delete');
-  }
+		[ dispatch, history ]
+	)
+
+	const deleteHandler = (id) => {
+		console.log('delete')
+	}
 
 	return (
 		<React.Fragment>
