@@ -26,7 +26,7 @@ const UserListScreen = ({ history }) => {
 				history.push('/login')
 			}
 		},
-		[ dispatch, history, successDelete ]
+		[ userInfo, dispatch, history, successDelete ]
 	)
 
 	const deleteHandler = (id) => {
@@ -69,7 +69,7 @@ const UserListScreen = ({ history }) => {
 									)}
 								</td>
 								<td>
-									<LinkContainer to={`/user/${user._id}/edit`}>
+									<LinkContainer to={`/admin/user/${user._id}/edit`}>
 										<Button variant='light' className='btn-sm'>
 											<i className='fas fa-edit' />
 										</Button>

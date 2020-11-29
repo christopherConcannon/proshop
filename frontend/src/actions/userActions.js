@@ -101,7 +101,7 @@ export const logout = () => (dispatch) => {
 	dispatch({ type: USER_LIST_RESET })
 }
 
-// if coming from the ProfileScreen, the id parameter will be 'profile'
+// if coming from the ProfileScreen, the id parameter will be 'profile', from the UserEditScreen, it will have the user id
 // we need to get our userInfo (with the token) from getState
 export const getUserDetails = (id) => async (dispatch, getState) => {
 	try {
@@ -119,7 +119,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
 			}
 		}
 
-		// /api/users/profile -- why passing in id here?  perhaps future endpoints will need it
+		// /api/users/profile -- or /api/users/:id
 		const { data } = await axios.get(`/api/users/${id}`, config)
 
 		dispatch({
@@ -217,7 +217,7 @@ export const deleteUser = (id) => async (dispatch, getState) => {
 			}
 		}
 
-		const { data } = await axios.delete(`/api/users/${id}`, config)
+		await axios.delete(`/api/users/${id}`, config)
 
 		dispatch({
 			type : USER_DELETE_SUCCESS
