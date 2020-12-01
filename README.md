@@ -27,7 +27,7 @@ Visit site [here](https://).
 Clone project to a directory on your local machine and cd into proshop directory.  Run <$ npm install> to install dependencies.  See package.json for other available scripts.
 
 ## Usage
-Run <$ npm start> to launch application and launch on localhost development server.  Create user on sign up page or log in to john@example.com with password '123456' as a guest.  Select products to view and add to cart.  Complete mock payment with PayPal integration. 
+Run <$ npm run dev> to launch application and launch on localhost development server.  Create user on sign up page or log in to john@example.com with password '123456' as a guest.  Select products to view and add to cart.  Complete mock payment with PayPal integration. 
 
 ## License 
 This project is covered under the MIT license 
