@@ -21,11 +21,12 @@ import {
 } from '../constants/productConstants'
 
 // redux thunk to create function within a function for async requests
-export const listProducts = (keyword = '') => async (dispatch) => {
+export const listProducts = (keyword = '', pageNumber = '') => async (dispatch) => {
 	try {
 		dispatch({ type: PRODUCT_LIST_REQUEST })
 
-		const { data } = await axios.get(`/api/products?keyword=${keyword}`)
+    // add keyword as query string to request url so it can filter results
+		const { data } = await axios.get(`/api/products?keyword=${keyword}&pageNumber=${pageNumber}`)
 
 		dispatch({
 			type    : PRODUCT_LIST_SUCCESS,

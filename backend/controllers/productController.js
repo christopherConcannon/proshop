@@ -5,7 +5,15 @@ import Product from '../models/productModel.js'
 // @route   GET /api/products
 // @access  Public
 const getProducts = asyncHandler(async (req, res) => {
-	// req.query will check for /api/products?...
+  // pagination... increase as you add more items
+  const pageSize = 6
+  const page = Number(req.query.pageNumber) || 1
+
+
+
+  // SEARCH FILTER  
+  // req.query will check for /api/products?<search term>
+  // if there is a keyword, set it as the name value to filter by
 	const keyword = req.query.keyword
 		? {
 				name : {
@@ -14,14 +22,21 @@ const getProducts = asyncHandler(async (req, res) => {
 					// case insensitive
 					$options : 'i'
 				}
-			}
-		: {}
+      }
+    // otherwise find all products
+    : {}
+    
+  const count = await Product.countDocuments({ ...keyword })
 
-	const products = await Product.find({ ...keyword })
+  // shallow clone keyword object with spread operator
+  // limit and skip will return the results required for the pagination functionality
+	const products = await Product.find({ ...keyword }).limit(pageSize).skip(pageSize * (page - 1))
 	// FOR TESTING ERROR MESSAGES
 	// res.status(401)
-	// throw new Error('Not Authorized')
-	res.json(products)
+  // throw new Error('Not Authorized')
+  
+  // send page and pages for pagination functionality
+	res.json({ products, page, pages: Math.ceil(count / pageSize) })
 })
 
 // @desc    Fetch single product

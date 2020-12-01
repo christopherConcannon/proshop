@@ -5,22 +5,26 @@ import { Row, Col } from 'react-bootstrap'
 import Product from '../components/Product'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
+import Paginate from '../components/Paginate'
 
 const HomeScreen = ({ match }) => {
-  const keyword = match.params.keyword
+	// get search term
+	const keyword = match.params.keyword
+	const pageNumber = match.params.pageNumber || 1
+
 	const dispatch = useDispatch()
 
 	const productList = useSelector((state) => state.productList)
-	const { products, loading, error } = productList
+	const { products, page, pages, loading, error } = productList
 
 	useEffect(
 		() => {
 			// dispatch action to get products
-			dispatch(listProducts(keyword))
+			dispatch(listProducts(keyword, pageNumber))
 		},
-		[ dispatch, keyword ]
-  )
-  
+		[ dispatch, keyword, pageNumber ]
+	)
+
 	return (
 		<React.Fragment>
 			<h1>Latest Products</h1>
@@ -29,13 +33,16 @@ const HomeScreen = ({ match }) => {
 			) : error ? (
 				<Message variant='danger'>{error}</Message>
 			) : (
-				<Row>
-					{products.map((product) => (
-						<Col key={product._id} sm={12} md={6} lg={4} xl={3}>
-							<Product {...product} />
-						</Col>
-					))}
-				</Row>
+				<React.Fragment>
+					<Row>
+						{products.map((product) => (
+							<Col key={product._id} sm={12} md={6} lg={4} xl={3}>
+								<Product {...product} />
+							</Col>
+						))}
+					</Row>
+					<Paginate pages={pages} page={page} keyword={keyword ? keyword : ''} />
+				</React.Fragment>
 			)}
 		</React.Fragment>
 	)
