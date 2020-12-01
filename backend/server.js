@@ -31,6 +31,11 @@ if(process.env.NODE_ENV === 'development'){
 // accept JSON data in req.body (replaces body-parser)
 app.use(express.json())
 
+// app.get('/', (req, res) => {
+//   res.send('API is running')
+// })
+
+
 app.use('/api/products', productRoutes)
 app.use('/api/users', userRoutes)
 app.use('/api/orders', orderRoutes)
@@ -43,9 +48,18 @@ app.get('/api/config/paypal', (req, res) => res.send(process.env.PAYPAL_CLIENT_I
 const __dirname = path.resolve()
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')))
 
-app.get('/', (req, res) => {
-  res.send('API is running')
-})
+// set frontend/build as static folder when deployed so we can directly access it and load index.html
+if(process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '/frontend/build')))
+
+  // any route that is not our api should go to static index.html build
+  app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html')))
+} else {
+  app.get('/', (req, res) => {
+      res.send('API is running')
+    })
+    
+}
 
 
 app.use(notFound)
