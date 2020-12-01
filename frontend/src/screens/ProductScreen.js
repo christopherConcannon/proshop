@@ -2,14 +2,12 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { listProductDetails, createProductReview } from '../actions/productActions'
-import {
-	PRODUCT_CREATE_REVIEW_FAIL,
-	PRODUCT_CREATE_REVIEW_RESET
-} from '../constants/productConstants'
+import { PRODUCT_CREATE_REVIEW_RESET } from '../constants/productConstants'
 import { Row, Col, Image, ListGroup, Card, Button, Form } from 'react-bootstrap'
 import Rating from '../components/Rating'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
+import Meta from '../components/Meta'
 
 // https://reactrouter.com/core/api/match -- React Router has match object with params prop (also see useParams()).  also has a history prop that allows you to push https://reactrouter.com/core/api/history
 const ProductScreen = ({ history, match }) => {
@@ -62,6 +60,7 @@ const ProductScreen = ({ history, match }) => {
 				<Message variant='danger'>{error}</Message>
 			) : (
 				<React.Fragment>
+					<Meta title={product.name} />
 					<Row>
 						<Col md={6}>
 							{/* pass fluid prop to keep image in it's container */}
