@@ -58,7 +58,7 @@ const OrderScreen = ({ match, history }) => {
 				}
 			}
 		},
-		[ dispatch, order, orderId, successPay, successDeliver ]
+		[ dispatch, order, orderId, successPay, successDeliver, userInfo, history ]
 	)
 
 	const addDecimals = (num) => {

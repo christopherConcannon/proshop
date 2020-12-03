@@ -27,8 +27,6 @@ const Paginate = ({ pages, page, isAdmin = false, keyword = '' }) => {
 			</Pagination>
 		)
 	)
-
-	return <div />
 }
 
 export default Paginate
