@@ -66,7 +66,6 @@ const ProductListScreen = ({ history, match }) => {
 	}
 
 	const deleteHandler = (id) => {
-		console.log('delete products')
 		if (window.confirm('Are you sure you want to remove this product?')) {
 			dispatch(deleteProduct(id))
 		}
