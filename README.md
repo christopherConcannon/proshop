@@ -4,7 +4,7 @@
 ![MIT license badge](https://img.shields.io/badge/license-MIT-green)
 
 ## Description
-A modern end-to-end, pedagogical e-commerce application built with the MERN Stack and Redux.  Features CMS-style admin database control and PayPal payment integration. 
+A modern end-to-end, pedagogical e-commerce application built with the MERN Stack and Redux.  Features CMS-style admin database control and PayPal payment integration.  
 
 ##### Homescreen
 ![Homescreen Screenshot](./assets/images/screenshot.png)
