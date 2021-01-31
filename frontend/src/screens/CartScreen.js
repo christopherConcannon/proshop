@@ -7,26 +7,29 @@ import Message from '../components/Message'
 
 // props.location.search from React Router will give us the query string with the qty
 const CartScreen = ({ match, location, history }) => {
-	const productId = match.params.id
 
-	// location.search returns ?qty=1...get the value after the equal sign with split
-	const qty = location.search ? Number(location.search.split('=')[1]) : 1
 
 	const dispatch = useDispatch()
 
 	const cart = useSelector((state) => state.cart)
-	const { cartItems } = cart
+  const { cartItems } = cart
+  
+  // ADD TO CART DISPATCH MOVED TO PRODUCT SCREEN TO ADDRESS BUG WHEN TRYING TO UPDATE QTY OF CART ITEM FROM CART SCREEN.  BECAUSE OF THE USE OF PARAMS TO SPECIFY QTY, IF YOU UPDATE QTY THEN REFRESH, THE VALUE REVERTS TO THE VALUE IN QUERY STRING
+  // const productId = match.params.id
 
-	// we can visit the cart just through the link in which case there will be no product id or query string.  if we are coming after a click on Add to Cart in the ProductScreen there will be product id and qty which we will use to update state
-	useEffect(
-		() => {
-			if (productId) {
-				dispatch(addToCart(productId, qty))
-			}
-		},
-		[ dispatch, productId, qty ]
-	)
+	// // location.search returns ?qty=1...get the value after the equal sign with split
+	// const qty = location.search ? Number(location.search.split('=')[1]) : 1
 
+	// // we can visit the cart just through the link in which case there will be no product id or query string.  if we are coming after a click on Add to Cart in the ProductScreen there will be product id and qty which we will use to update state
+	// useEffect(
+	// 	() => {
+	// 		if (productId) {
+	// 			dispatch(addToCart(productId, qty))
+	// 		}
+	// 	},
+	// 	[ dispatch, productId, qty ]
+  // )
+  
 	const removeFromCartHandler = (id) => {
     dispatch(removeFromCart(id))
   }

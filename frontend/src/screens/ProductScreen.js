@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { listProductDetails, createProductReview } from '../actions/productActions'
 import { PRODUCT_CREATE_REVIEW_RESET } from '../constants/productConstants'
+import { addToCart } from '../actions/cartActions'
 import { Row, Col, Image, ListGroup, Card, Button, Form } from 'react-bootstrap'
 import Rating from '../components/Rating'
 import Message from '../components/Message'
@@ -40,10 +41,15 @@ const ProductScreen = ({ history, match }) => {
 		[ match, dispatch, successProductReview ]
 	)
 	// go to cart page with some parameters (product id and qty as query string -- http://localhost:3000/cart/5fb30918449c928f9cb54b18?qty=2)
-	const addToCartHandler = () => {
-		// props.history.push will redirect
-		history.push(`/cart/${match.params.id}?qty=${qty}`)
-	}
+	// const addToCartHandler = () => {
+	// 	// props.history.push will redirect
+	// 	history.push(`/cart/${match.params.id}?qty=${qty}`)
+  // }
+  
+  const addToCartHandler = () => {
+    dispatch(addToCart(product._id, qty))
+    history.push('/cart')
+}
 
 	const submitHandler = (e) => {
 		e.preventDefault()
