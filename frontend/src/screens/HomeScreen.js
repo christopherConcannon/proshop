@@ -11,7 +11,7 @@ import ProductCarousel from '../components/ProductCarousel'
 import Meta from '../components/Meta'
 
 const HomeScreen = ({ match }) => {
-	// get search term
+	// get search term if this render is the result of a search
 	const keyword = match.params.keyword
 	const pageNumber = match.params.pageNumber || 1
 
@@ -22,7 +22,7 @@ const HomeScreen = ({ match }) => {
 
 	useEffect(
 		() => {
-			// dispatch action to get products
+			// dispatch action to get products.  pass keyword if it is a search
 			dispatch(listProducts(keyword, pageNumber))
 		},
 		[ dispatch, keyword, pageNumber ]
@@ -30,10 +30,13 @@ const HomeScreen = ({ match }) => {
 
 	return (
 		<React.Fragment>
+      {/* dynamically display title and meta tags in .html head.  Pass props to customize for each component (see ProductScreen) */}
 			<Meta />
+      {/* if no keyword, it's not a search so show carousel */}
 			{!keyword ? (
 				<ProductCarousel />
 			) : (
+        // otherwise show back button with search results
 				<Link to='/' className='btn btn-light'>
 					Go Back
 				</Link>

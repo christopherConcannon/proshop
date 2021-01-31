@@ -17,6 +17,7 @@ const ProductScreen = ({ history, match }) => {
 
 	const dispatch = useDispatch()
 
+  // get auth status to allow review creation if logged in
 	const userLogin = useSelector((state) => state.userLogin)
 	const { userInfo } = userLogin
 
@@ -67,6 +68,7 @@ const ProductScreen = ({ history, match }) => {
 							<Image src={product.image} alt={product.name} fluid />
 						</Col>
 						<Col md={3}>
+              {/* Add the flush variant to remove outer borders and rounded corners */}
 							<ListGroup variant='flush'>
 								<ListGroup.Item>
 									<h3>{product.name}</h3>

@@ -1,3 +1,4 @@
+// middleware for handling exceptions inside of async express routes and passing them to our express error handlers.  allows us to simply throw new Error with message argument and custom handlers will override default express error handling to send back json instead of html.
 import asyncHandler from 'express-async-handler'
 import Product from '../models/productModel.js'
 
@@ -8,8 +9,6 @@ const getProducts = asyncHandler(async (req, res) => {
   // pagination... increase as you add more items
   const pageSize = 6
   const page = Number(req.query.pageNumber) || 1
-
-
 
   // SEARCH FILTER  
   // req.query will check for /api/products?<search term>
@@ -26,6 +25,7 @@ const getProducts = asyncHandler(async (req, res) => {
     // otherwise find all products
     : {}
     
+  // count the number of results from our keyword search
   const count = await Product.countDocuments({ ...keyword })
 
   // shallow clone keyword object with spread operator

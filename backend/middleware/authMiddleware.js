@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken'
 import asyncHandler from 'express-async-handler'
 import User from '../models/userModel.js'
 
+// add this to any route you want to restrict
 const protect = asyncHandler(async (req, res, next) => {
 	let token
 	// console.log(req.headers.authorization)

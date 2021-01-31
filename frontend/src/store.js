@@ -53,6 +53,7 @@ const reducer = combineReducers({
 	orderList           : orderListReducer
 })
 
+// if user never logged out on last visit, we will initialize the store with their data from local storage.  otherwise, with an empty value
 const cartItemsFromStorage = localStorage.getItem('cartItems')
 	? JSON.parse(localStorage.getItem('cartItems'))
 	: []

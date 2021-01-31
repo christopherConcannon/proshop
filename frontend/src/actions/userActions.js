@@ -71,6 +71,7 @@ export const login = (email, password) => async (dispatch) => {
 			type : USER_LOGIN_REQUEST
 		})
 
+    // when we're sending data, we want to send the Content-Type in the headers
 		const config = {
 			headers : {
 				'Content-Type' : 'application/json'
@@ -84,6 +85,7 @@ export const login = (email, password) => async (dispatch) => {
 			payload : data
 		})
 
+    // if user is authenticated add to local storage so id and token will be available
 		localStorage.setItem('userInfo', JSON.stringify(data))
 	} catch (error) {
 		dispatch({

@@ -7,7 +7,9 @@ import Message from '../components/Message'
 import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
 
+// location and history props passed by react-router
 const LoginScreen = ({ location, history }) => {
+  // local state to control form
 	const [ email, setEmail ] = useState('')
 	const [ password, setPassword ] = useState('')
 
@@ -17,8 +19,11 @@ const LoginScreen = ({ location, history }) => {
 
 	const { userInfo, loading, error } = userLogin
 
+  // location.search will have url query string if it exists, so parse
 	const redirect = location.search ? location.search.split('=')[1] : '/'
 
+
+  // if user is already logged in, we want to redirect to whatever is in the redirect variable which will be '/' so we go back to the HomeScreen
 	useEffect(
 		() => {
 			if (userInfo) {

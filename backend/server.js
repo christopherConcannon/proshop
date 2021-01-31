@@ -20,10 +20,12 @@ import uploadRoutes from './routes/uploadRoutes.js'
 
 dotenv.config()
 
+// initialize db with mongoose
 connectDB()
 
 const app = express()
 
+// request logger
 if(process.env.NODE_ENV === 'development'){
   app.use(morgan('dev'))
 }
@@ -31,11 +33,10 @@ if(process.env.NODE_ENV === 'development'){
 // accept JSON data in req.body (replaces body-parser)
 app.use(express.json())
 
+// define api routes
 // app.get('/', (req, res) => {
 //   res.send('API is running')
 // })
-
-
 app.use('/api/products', productRoutes)
 app.use('/api/users', userRoutes)
 app.use('/api/orders', orderRoutes)
@@ -62,6 +63,7 @@ if(process.env.NODE_ENV === 'production') {
 }
 
 
+// CUSTOM ERROR HANDLING MIDDLEWARE USED IN CONJUNCTION WITH EXPRESS ASYNC HANDLER IN ROUTE CONTROLLERS
 app.use(notFound)
 
 // for error middleware
