@@ -38,8 +38,8 @@ const ProfileScreen = ({ history }) => {
 			if (!userInfo) {
 				history.push('/login')
 			} else {
-				// when component component is loaded there is nothing in the user state, so we need to dispatch action to get user details to populate form
-				if (!user.name || !user.name || success) {
+				// when component is loaded there is nothing in the user state, so we need to dispatch action to get user details to populate form
+				if (!user || !user.name || success) {
 					dispatch({ type: USER_UPDATE_PROFILE_RESET })
           dispatch(getUserDetails('profile'))
           dispatch(listMyOrders())

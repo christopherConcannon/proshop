@@ -23,9 +23,13 @@ const LoginScreen = ({ location, history }) => {
 	const redirect = location.search ? location.search.split('=')[1] : '/'
 
 
-  // if user is already logged in, we want to redirect to whatever is in the redirect variable which will be '/' so we go back to the HomeScreen
+
+  // if user is logged in, we want to redirect to whatever is in the redirect variable.
+  // when the user clicks 'Proceed to Checkout' on the CartScreen, the url will be '/login?redirect=shipping'
+  // if there is no query string in the url, it is just a regular login from the login link and we just want to redirect to the HomeScreen, only now the user will be auth'd and the navbar will reflect that.
 	useEffect(
 		() => {
+      // userInfo is truthy only if user is logged in and redux has updated the store with userInfo.  whenever that value changes we want to run this function
 			if (userInfo) {
 				history.push(redirect)
 			}
@@ -71,6 +75,7 @@ const LoginScreen = ({ location, history }) => {
 			<Row className='py-3'>
 				<Col>
 					New Customer?{' '}
+          {/* we want the same redirect behavior as described above if it is a new user that needs to create an account */}
 					<Link to={redirect ? `/register?redirect=${redirect}` : '/register'}>
 						Register
 					</Link>

@@ -41,10 +41,12 @@ const registerUser = asyncHandler(async (req, res) => {
 const authUser = asyncHandler(async (req, res) => {
 	const { email, password } = req.body
 
+  // find user in db by email
 	const user = await User.findOne({ email })
 
-	// call instance method to match pw
+	// if user is found call model instance method to match pw
 	if (user && (await user.matchPassword(password))) {
+    // if password is a match, return user object from db, adding a token property to the response (but not kept in the db)
 		res.json({
 			_id     : user._id,
 			name    : user.name,

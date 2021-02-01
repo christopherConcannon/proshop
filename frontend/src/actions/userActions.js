@@ -86,7 +86,7 @@ export const login = (email, password) => async (dispatch) => {
 			payload : data
 		})
 
-    // if user is authenticated add to local storage so id and token will be available
+    // when user is authenticated add to local storage so info will persist on subsequent visits
 		localStorage.setItem('userInfo', JSON.stringify(data))
 	} catch (error) {
 		dispatch({
@@ -101,6 +101,7 @@ export const login = (email, password) => async (dispatch) => {
 
 export const logout = () => (dispatch) => {
 	localStorage.removeItem('userInfo')
+	localStorage.removeItem('cartItems')
 	dispatch({ type: USER_LOGOUT })
 	dispatch({ type: USER_DETAILS_RESET })
 	dispatch({ type: ORDER_LIST_MY_RESET })
@@ -109,14 +110,14 @@ export const logout = () => (dispatch) => {
 }
 
 // if coming from the ProfileScreen, the id parameter will be 'profile', from the UserEditScreen, it will have the user id
-// we need to get our userInfo (with the token) from getState
+// we need to get our userInfo (with the token) from getState since this is a protected route
 export const getUserDetails = (id) => async (dispatch, getState) => {
 	try {
 		dispatch({
 			type : USER_DETAILS_REQUEST
 		})
 
-		// destructure nested userInfo object
+		// destructure nested userInfo object...getState().userLogin.userInfo
 		const { userLogin: { userInfo } } = getState()
 
 		const config = {
